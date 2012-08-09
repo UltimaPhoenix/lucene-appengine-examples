@@ -105,7 +105,10 @@
 	</div>
 	<br />
 	<div>
-		For details see <a href="">Lucene-AppEngine project (LAE)</a>
+		For details see <a href="http://code.google.com/p/lucene-appengine">Lucene-AppEngine project (LAE)</a>
+	</div>
+	<div>
+		Source code of this demo <a href="http://code.google.com/p/lucene-appengine-examples">Lucene-AppEngine Example project (LAE)</a>
 	</div>
 </body>
 	<footer>
