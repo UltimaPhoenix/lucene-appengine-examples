@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.googlecode.lucene</groupId>
+	<artifactId>gae-test-index</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>${gae.application.name}</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<slf4j.version>1.6.6</slf4j.version>
+		<logback.version>1.0.6</logback.version>
+		<gae.application.name>bigtablelucene</gae.application.name>
+		<gae.plugin.version>0.9.3</gae.plugin.version>
+		<gae.version>1.7.0</gae.version>
+		<gae.application.version>test</gae.application.version>
+		<gae.serverId>bigtable-lucene</gae.serverId>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>objectify-appengine</id>
+			<name>Objectify Maven Repository</name>
+			<url>http://objectify-appengine.googlecode.com/svn/maven</url>
+		</repository>
+		<repository>
+			<id>lucene-appengine-snapshots</id>
+			<name>Lucene App Engine Snapshots</name>
+			<url>http://repo.lucene-appengine.googlecode.com/hg/snapshots</url>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>lucene-appengine-releases</id>
+			<name>Lucene App Engine Releases</name>
+			<url>http://repo.lucene-appengine.googlecode.com/hg/releases</url>
+			<releases><enabled>true</enabled></releases>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- jars from GAE's "lib/user" must be added as compile-time dependencies, 
+			as described here in "Copying JARs" section: http://code.google.com/appengine/docs/java/tools/ant.html -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${gae.version}</version>
+		</dependency>
+
+		<!-- J2EE Servlet API. We need it to compile IndexServlet class. You can 
+			probably remove it, if you don't explicitly use Servlets. -->
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-servlet_2.5_spec</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Make use of JSP tags. Remove, if you don't use JSPs. -->
+		<dependency>
+			<artifactId>standard</artifactId>
+			<groupId>taglibs</groupId>
+			<version>1.1.2</version>
+			<type>jar</type>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- GAE libraries for local testing as described here: http://code.google.com/appengine/docs/java/howto/unittesting.html -->
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.appengine</groupId> -->
+		<!-- <artifactId>appengine-api-labs</artifactId> -->
+		<!-- <version>${gae.version}</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.appengine</groupId> -->
+		<!-- <artifactId>appengine-api-stubs</artifactId> -->
+		<!-- <version>${gae.version}</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+
+		<!-- <dependency> -->
+		<!-- <groupId>com.google.appengine</groupId> -->
+		<!-- <artifactId>appengine-testing</artifactId> -->
+		<!-- <version>${gae.version}</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+		
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.googlecode.lucene.appengine</groupId>
+			<artifactId>lucene-appengine</artifactId>
+			<version>3.6.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>3.6.1</version>
+		</dependency>
+		
+
+		<!-- These dependencies are here just for enabling logging. -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.5.1</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resource-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.12.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>	
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.archetype</groupId>
+				<artifactId>archetype-packaging</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-archetype-plugin</artifactId>
+				<version>2.2</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<filtering>true</filtering>
+							<includes>
+								<include>**/appengine-web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+
+			<!-- The actual maven-gae-plugin. Type "mvn gae:run" to run project, "mvn 
+				gae:deploy" to upload to GAE. -->
+			<plugin>
+				<groupId>net.kindleit</groupId>
+				<artifactId>maven-gae-plugin</artifactId>
+				<version>${gae.plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>net.kindleit</groupId>
+						<artifactId>gae-runtime</artifactId>
+						<version>${gae.version}</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
+				<!-- Non si sa prché ma gae:debug si blocca quindi puoi usare gae:run 
+					con queste opzioni -->
+				<configuration>
+					<jvmFlags>
+						<jvmFlag>-Xdebug</jvmFlag>
+						<jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag>
+						<jvmFlag>-noverify</jvmFlag>
+					</jvmFlags>
+				</configuration>
+			</plugin>
+
+			<!-- Upload application to the appspot automatically, during release:perform. -->
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<goals>gae:deploy</goals>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
