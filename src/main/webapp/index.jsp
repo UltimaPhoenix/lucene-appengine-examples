@@ -1,15 +1,15 @@
+	<%@page import="org.apache.lucene.document.Document"%>
+<%@page import="org.apache.lucene.search.IndexSearcher"%>
+<%@page import="org.apache.lucene.search.ScoreDoc"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.apache.lucene.index.Term"%>
 <%@page import="com.googlecode.lucene.appengine.LuceneIndex"%>
 <%@page import="com.googlecode.lucene.appengine.GaeDirectory"%>
-<%@page import="org.apache.lucene.document.Document"%>
-<%@page import="org.apache.lucene.search.ScoreDoc"%>
-<%@page import="org.apache.lucene.search.IndexSearcher"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Lucene AppEngine Demo</title>
+<title>Lucene AppEngine 4.0.0-SNAPSHOT Demo</title>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -44,7 +44,6 @@
 				</li>
 				<%
 				}
-				searcher.close();
 			}
 		%>
 	</ol>
