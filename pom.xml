@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.lucene</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>3.6.1</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -111,7 +111,7 @@
 		<dependency>
 			<groupId>com.googlecode.lucene.appengine</groupId>
 			<artifactId>lucene-appengine</artifactId>
-			<version>3.6.1-SNAPSHOT</version>
+			<version>3.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
