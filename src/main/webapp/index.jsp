@@ -36,7 +36,7 @@
 				
 				for(int i=0;i<hits.length;++i) {
 				    Document d = searcher.doc(hits[i].doc);
-				    String docId = URLEncoder.encode(d.get("id"), "UTF-8") ;
+				    String docId = URLEncoder.encode(d.get("id"), "UTF-8");
 				%>
 				<li title="id=<%= docId %>">
 				  	<b><%= d.get("title") %></b> --

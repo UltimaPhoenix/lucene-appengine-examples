@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexNotFoundException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
@@ -38,8 +40,8 @@ public class IndexServlet extends HttpServlet {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4758577562823785272L;
-	
+	private static final long serialVersionUID = 453189771475098636L;
+
 	private static final Logger log = LoggerFactory.getLogger(IndexServlet.class);
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_40;
@@ -82,7 +84,7 @@ public class IndexServlet extends HttpServlet {
 				
 					request.setAttribute("message", "Result for index '" + indexName + "' query '" + query + "'");
 					int hitsPerPage = 10;
-					reader = IndexReader.open(directory);
+					reader = DirectoryReader.open(directory);
 					searcher = new IndexSearcher(reader);
 					TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
 					searcher.search(q, collector);
@@ -115,7 +117,7 @@ public class IndexServlet extends HttpServlet {
 				IndexWriter w = null;
 				try {
 					w = new IndexWriter(directory, config);
-					w.deleteDocuments(new Term("id", docId));
+					w.deleteDocuments(new Term("id", docId.intern()));
 					request.setAttribute("message", "Successfull deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
 				} catch (Exception e) {
 					request.setAttribute("message", "Error during deindex doc:'" + docId + "' in index:' " + indexName + "' cause:"+ e.getMessage());
@@ -126,7 +128,7 @@ public class IndexServlet extends HttpServlet {
 			} else if("add".equalsIgnoreCase(action)) {
 				//nothing to do created during new GaeDirectory()
 			}
-			
+			analyzer.close();
 			getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 		} finally {
 			directory.close();
@@ -135,9 +137,23 @@ public class IndexServlet extends HttpServlet {
 
 	private static void addDoc(IndexWriter w, String value) throws CorruptIndexException, IOException {
 		Document doc = new Document();
-		doc.add(new Field("id", UUID.randomUUID().toString(), Field.Store.YES, Field.Index.NO));
-	    doc.add(new Field("title", value, Field.Store.YES, Field.Index.ANALYZED));
+		doc.add(new Field("id", UUID.randomUUID().toString(), idType()));
+	    doc.add(new Field("title", value, titleType()));
 	    w.addDocument(doc);
+	}
+
+	private static FieldType idType() {
+		FieldType idType = new FieldType();
+		idType.setIndexed(false);
+		idType.setStored(true);
+		return idType;
+	}
+
+	private static FieldType titleType() {
+		FieldType titleType = new FieldType();
+		titleType.setIndexed(true);
+		titleType.setStored(true);
+		return titleType;
 	}
 	
 }
