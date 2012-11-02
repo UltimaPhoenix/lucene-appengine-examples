@@ -76,27 +76,6 @@ public class IndexServlet extends HttpServlet {
 				} finally {
 					w.close();
 				}
-			} else if("search".equalsIgnoreCase(action)) {
-				IndexReader reader = null;
-				IndexSearcher searcher = null;
-				try {
-					Query q = new QueryParser(LUCENE_VERSION, "title", analyzer).parse(query);
-				
-					request.setAttribute("message", "Result for index '" + indexName + "' query '" + query + "'");
-					int hitsPerPage = 10;
-					reader = DirectoryReader.open(directory);
-					searcher = new IndexSearcher(reader);
-					TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
-					searcher.search(q, collector);
-					ScoreDoc[] hits = collector.topDocs().scoreDocs;
-					
-					request.setAttribute("searcher", searcher);
-					request.setAttribute("hits", hits);
-				} catch (ParseException e) {
-					request.setAttribute("message", "Query parse exception:'" + indexName + "' '" + query + "', cause:" + e.getMessage());
-				} catch (IndexNotFoundException e) {
-					request.setAttribute("message", "Cannot find index:'" + indexName + "'.");
-				}
 			} else if("delete".equalsIgnoreCase(action)) {
 				directory.delete();
 			} else if("clear".equalsIgnoreCase(action)) {
@@ -128,6 +107,28 @@ public class IndexServlet extends HttpServlet {
 			} else if("add".equalsIgnoreCase(action)) {
 				//nothing to do created during new GaeDirectory()
 			}
+			if("search".equalsIgnoreCase(action) || "deindex".equalsIgnoreCase(action)) {
+				IndexReader reader = null;
+				IndexSearcher searcher = null;
+				try {
+					Query q = new QueryParser(LUCENE_VERSION, "title", analyzer).parse(query);
+				
+					request.setAttribute("message", "Result for index '" + indexName + "' query '" + query + "'");
+					int hitsPerPage = 10;
+					reader = DirectoryReader.open(directory);
+					searcher = new IndexSearcher(reader);
+					TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
+					searcher.search(q, collector);
+					ScoreDoc[] hits = collector.topDocs().scoreDocs;
+					
+					request.setAttribute("searcher", searcher);
+					request.setAttribute("hits", hits);
+				} catch (ParseException e) {
+					request.setAttribute("message", "Query parse exception:'" + indexName + "' '" + query + "', cause:" + e.getMessage());
+				} catch (IndexNotFoundException e) {
+					request.setAttribute("message", "Cannot find index:'" + indexName + "'.");
+				}
+			}
 			analyzer.close();
 			getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 		} finally {
@@ -144,8 +145,9 @@ public class IndexServlet extends HttpServlet {
 
 	private static FieldType idType() {
 		FieldType idType = new FieldType();
-		idType.setIndexed(false);
+		idType.setIndexed(true);
 		idType.setStored(true);
+		idType.setTokenized(false);
 		return idType;
 	}
 

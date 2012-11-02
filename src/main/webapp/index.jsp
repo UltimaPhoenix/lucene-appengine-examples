@@ -33,14 +33,15 @@
 			if(hits != null) {
 				IndexSearcher searcher = (IndexSearcher) request.getAttribute("searcher");
 				out.write("Found " + hits.length + " hits. <br />");
-				
+				String indexName = request.getParameter("indexName");
+				String query = request.getParameter("query");
 				for(int i=0;i<hits.length;++i) {
 				    Document d = searcher.doc(hits[i].doc);
 				    String docId = URLEncoder.encode(d.get("id"), "UTF-8");
 				%>
 				<li title="id=<%= docId %>">
 				  	<b><%= d.get("title") %></b> --
-				  	<a href="deindex.do?action=deindex&docId=<%= docId %>">Deindex</a>
+				  	<a href="deindex.do?action=deindex&docId=<%= docId %>&indexName=<%= indexName %>&query=<%= query %>">Deindex</a>
 				</li>
 				<%
 				}
