@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.lucene</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>4.0.0-SNAPSHOT</version>
+	<version>4.1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<slf4j.version>1.6.6</slf4j.version>
+		<slf4j.version>1.7.2</slf4j.version>
 		<logback.version>1.0.6</logback.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
 		<gae.plugin.version>0.9.3</gae.plugin.version>
@@ -107,31 +107,30 @@
 			<scope>test</scope>
 		</dependency>
 
-
 		<dependency>
 			<groupId>com.googlecode.lucene.appengine</groupId>
 			<artifactId>lucene-appengine</artifactId>
-			<version>4.0.0-SNAPSHOT</version>
+			<version>4.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>4.0.0</version>
+			<version>4.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-common</artifactId>
-			<version>4.0.0</version>
+			<version>4.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queries</artifactId>
-			<version>4.0.0</version>
+			<version>4.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queryparser</artifactId>
-			<version>4.0.0</version>
+			<version>4.1.0</version>
 		</dependency>
 		
 		
@@ -171,15 +170,15 @@
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>2.5.1</version>
+					<version>3.0</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-resource-plugin</artifactId>
-					<version>2.5</version>
+					<version>2.6</version>
 				</plugin>
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.12.1</version>
+					<version>2.13</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>	

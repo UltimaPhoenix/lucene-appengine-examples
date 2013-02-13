@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Lucene AppEngine 4.0.0-SNAPSHOT Demo</title>
+<title>Lucene AppEngine 4.1.0-SNAPSHOT Demo</title>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
