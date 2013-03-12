@@ -44,7 +44,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(IndexServlet.class);
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_40;
+	private static final Version LUCENE_VERSION = Version.LUCENE_41;
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,6 +68,7 @@ public class IndexServlet extends HttpServlet {
 				final IndexWriter w = new IndexWriter(directory, config);
 				
 				request.setAttribute("message", "Indexed in index '" + indexName + "' string: " + text);
+				long start = System.currentTimeMillis();
 				try {
 					addDoc(w, text);
 				} catch(Exception e) {
@@ -76,6 +77,8 @@ public class IndexServlet extends HttpServlet {
 				} finally {
 					w.close();
 				}
+				long end = System.currentTimeMillis();
+				log.info("Search: {} millis.", end - start);
 			} else if("delete".equalsIgnoreCase(action)) {
 				directory.delete();
 			} else if("clear".equalsIgnoreCase(action)) {
@@ -116,9 +119,12 @@ public class IndexServlet extends HttpServlet {
 					request.setAttribute("message", "Result for index '" + indexName + "' query '" + query + "'");
 					int hitsPerPage = 10;
 					reader = DirectoryReader.open(directory);
+					long start = System.currentTimeMillis();
 					searcher = new IndexSearcher(reader);
 					TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
 					searcher.search(q, collector);
+					long end = System.currentTimeMillis();
+					log.info("Search: {} millis.", end - start);
 					ScoreDoc[] hits = collector.topDocs().scoreDocs;
 					
 					request.setAttribute("searcher", searcher);

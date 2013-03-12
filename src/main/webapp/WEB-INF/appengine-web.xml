@@ -6,7 +6,7 @@
         http://googleappengine.googlecode.com/svn/branches/1.2.1/java/docs/appengine-web.xsd">
 
 	<application>bigtable-lucene</application>
-	<version>410-0</version>
+	<version>410-1</version>
 	<threadsafe>true</threadsafe>
 
 	<static-files>
