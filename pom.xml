@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.lucene</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>4.1.0-SNAPSHOT</version>
+	<version>4.2.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -110,27 +110,27 @@
 		<dependency>
 			<groupId>com.googlecode.lucene.appengine</groupId>
 			<artifactId>lucene-appengine</artifactId>
-			<version>4.1.0</version>
+			<version>4.2.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>4.1.0</version>
+			<version>4.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-common</artifactId>
-			<version>4.1.0</version>
+			<version>4.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queries</artifactId>
-			<version>4.1.0</version>
+			<version>4.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queryparser</artifactId>
-			<version>4.1.0</version>
+			<version>4.2.0</version>
 		</dependency>
 		
 		
