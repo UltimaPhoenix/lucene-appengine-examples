@@ -23,5 +23,4 @@
 	    <property name="os.arch" value="GAE whatever" />
 	</system-properties>
 
-	<sessions-enabled>true</sessions-enabled>
 </appengine-web-app>
