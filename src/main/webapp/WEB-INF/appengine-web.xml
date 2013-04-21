@@ -6,12 +6,16 @@
         http://googleappengine.googlecode.com/svn/trunk/java/src/main/com/google/appengine/tools/development/appengine-web.xsd">
 
 	<application>bigtable-lucene</application>
-	<version>420-0</version>
+	<version>420-0-priority</version>
 	<threadsafe>true</threadsafe>
 
 	<static-files>
 		<include path="/favicon.ico" />
 	</static-files>
+	
+	<class-loader-config>
+        <priority-specifier filename="lucene-appengine-4.2.0-SNAPSHOT.jar"/>
+	</class-loader-config>
 
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/classes/logging.properties" />
