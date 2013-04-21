@@ -9,7 +9,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Lucene AppEngine 4.2.0-SNAPSHOT Demo</title>
+	<title>Lucene AppEngine 4.2.0-SNAPSHOT Demo</title>
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+	<link href="http://twitter.github.io/bootstrap/assets/css/docs.css" rel="stylesheet">
+	<link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css" type="text/css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js" type="text/javascript"></script>
+	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+	
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -25,7 +31,9 @@
 </script>
 </head>
 <body>
+	<div class="container">
 	<h1>Welcome to Google App Engine Lucene demo application!</h1>
+	<br />
 	<h3><%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %></h3>
 	<ol>
 		<%
@@ -48,9 +56,10 @@
 			}
 		%>
 	</ol>
+	<br />
 	<div>
 		<h3>Index Interaction</h3>
-		<form action="search.do" method="get">
+		<form action="search.do" method="get" class="form-search">
 			Query: 
 			<select name="indexName">
 			<%for (LuceneIndex index : GaeDirectory.getAvailableIndexes()) {%>
@@ -60,10 +69,10 @@
 			<%}%>
 			</select>
 			with
-			<input type="text" size="100" name="query" placeholder="Fill with query '*' means all"  value="<%= request.getParameter("query") != null ? request.getParameter("query") : "" %>"/>
-			<input type="submit" name="action" value="search" />
+			<input type="text" size="100" name="query" placeholder="Fill with query '*' means all"  value="<%= request.getParameter("query") != null ? request.getParameter("query") : "" %>" class="input-medium search-query"/>
+			<input type="submit" name="action" value="search" class="btn" />
 		</form>
-		<form action="index.do" method="post">
+		<form action="index.do" method="post" class="form-inline">
 			Index:
 			<select name="indexName">
 			<%for (LuceneIndex index : GaeDirectory.getAvailableIndexes()) {%>
@@ -74,23 +83,25 @@
 			</select>
 			text
 			<input type="text" size="100" name="text" placeholder="Fill with text to index" value="<%= request.getParameter("text") != null ? request.getParameter("text") : "" %>"/>
-			<input type="submit" name="action" value="index" />
+			<input type="submit" name="action" value="index" class="btn" />
 	</form>
 	</div>
-	<div>
+	<div class="tabbable">
 		<h3>Index Management</h3>
 		<div>
+			<small>
 			Available indexes: 
 			<%for (LuceneIndex index : GaeDirectory.getAvailableIndexes()) {%>
 				'<i><%= index.getName() %></i>'
 			<%} %>
+			</small>
 		</div>
-		<form action="addIndex.do">
+		<form action="addIndex.do" class="form-inline">
 			Create index: 
 			<input type="text" name="indexName" placeholder="Enter index name" value="" size="40"/>
-			<input type="submit" name="action" value="add" />
+			<input type="submit" name="action" value="add" class="btn" />
 		</form>
-		<form action="deleteIndex.do" method="post">
+		<form action="deleteIndex.do" method="post" class="form-inline">
 			Delete index: 
 			<select name="indexName">
 			<%for (LuceneIndex index : GaeDirectory.getAvailableIndexes()) {%>
@@ -99,20 +110,24 @@
 				</option>
 			<%}%>
 			</select>
-			<input type="submit" name="action" value="clear" />
-			<input type="submit" name="action" value="delete" />
+			<input type="submit" name="action" value="clear" class="btn" />
+			<input type="submit" name="action" value="delete" class="btn" />
 		</form>
 	</div>
-	<br />
-	<div>
-		For details see <a href="http://code.google.com/p/lucene-appengine">Lucene-AppEngine project (LAE)</a>
-	</div>
-	<div>
-		Source code of this demo <a href="http://code.google.com/p/lucene-appengine-examples">Lucene-AppEngine Example project (LAE)</a>
-	</div>
+</div>
+<footer class="footer">
+  <div class="container">
+  	<p class="muted credit">Created by: Fabio Grucci</p>
+	<p class="muted credit">Powered by: Google App Engine (GAE), Lucene-AppEngine (LAE) and Apache Lucene, Bootstrap</p>
+    <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>.</p>
+    <ul class="footer-links">
+      <li><a href="http://code.google.com/p/lucene-appengine-examples">Source</a></li>
+      <li class="muted">·</li>
+      <li><a href="http://code.google.com/p/lucene-appengine">Lucene-AppEngine project (LAE)</a></li>
+      <li class="muted">·</li>
+      <li><a href="http://co-de-generation.blogspot.it">Author Blog</a></li>
+    </ul>
+  </div>
+</footer>
 </body>
-	<footer>
-		<p>Created by: Fabio Grucci</p>
-		<p>Powered by: Google App Engine (GAE), Lucene-AppEngine (LAE) and Apache Lucene</p>
-	</footer>
 </html>
