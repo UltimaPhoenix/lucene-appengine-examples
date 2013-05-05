@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.lucene</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>4.2.0-SNAPSHOT</version>
+	<version>4.2.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -15,8 +15,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<slf4j.version>1.7.2</slf4j.version>
-		<logback.version>1.0.6</logback.version>
+		<lucene.version>4.2.1</lucene.version>
+		<lucene.appengine.version>4.2.1-SNAPSHOT</lucene.appengine.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<logback.version>1.0.7</logback.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
 		<gae.plugin.version>0.9.5</gae.plugin.version>
 		<gae.version>1.7.7</gae.version>
@@ -111,31 +113,29 @@
 		<dependency>
 			<groupId>com.googlecode.lucene.appengine</groupId>
 			<artifactId>lucene-appengine</artifactId>
-			<version>4.2.0-SNAPSHOT</version>
+			<version>${lucene.appengine.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>4.2.0</version>
+			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-analyzers-common</artifactId>
-			<version>4.2.0</version>
+			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queries</artifactId>
-			<version>4.2.0</version>
+			<version>${lucene.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queryparser</artifactId>
-			<version>4.2.0</version>
+			<version>${lucene.version}</version>
 		</dependency>
 		
-		
-
 		<!-- These dependencies are here just for enabling logging. -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -234,9 +234,9 @@
 						<type>pom</type>
 					</dependency>
 				</dependencies>
-				<!-- Non si sa prché ma gae:debug si blocca quindi puoi usare gae:run 
-					con queste opzioni -->
+				<!-- mvn gae:debug freeze; workaround: use gae:run with debug option -->
 				<configuration>
+				    <splitJars>true</splitJars>
 					<jvmFlags>
 						<jvmFlag>-Xdebug</jvmFlag>
 						<jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag>
