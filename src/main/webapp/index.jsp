@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lucene AppEngine 4.2.1-SNAPSHOT Demo</title>
+	<title>Lucene AppEngine 4.3.0-SNAPSHOT Demo</title>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
 	<link href="http://twitter.github.io/bootstrap/assets/css/docs.css" rel="stylesheet">
 	<link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css" type="text/css">

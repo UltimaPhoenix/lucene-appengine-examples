@@ -44,7 +44,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(IndexServlet.class);
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_42;
+	private static final Version LUCENE_VERSION = Version.LUCENE_43;
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
