@@ -32,7 +32,7 @@
 </head>
 <body>
 	<div class="container">
-	<h1>Welcome to Google App Engine Lucene demo application!</h1>
+	<h1>Welcome to Lucene AppEngine demo application!</h1>
 	<br />
 	<h3><%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %></h3>
 	<ol>
