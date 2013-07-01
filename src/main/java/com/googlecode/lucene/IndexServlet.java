@@ -80,7 +80,13 @@ public class IndexServlet extends HttpServlet {
 				long end = System.currentTimeMillis();
 				log.info("Search: {} millis.", end - start);
 			} else if("delete".equalsIgnoreCase(action)) {
-				directory.delete();
+				try {
+					directory.delete();
+					request.setAttribute("info", "Successfull deleted index:'" + indexName + "'.");
+				} catch (RuntimeException e) {
+					request.setAttribute("error", "Error during delete index:'" + indexName + "' cause:" + e.getMessage());
+					log.error("Error during delete index '{}'.", indexName, e);
+				}
 			} else if("clear".equalsIgnoreCase(action)) {
 				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
 				final IndexWriter w = new IndexWriter(directory, config);
@@ -101,6 +107,7 @@ public class IndexServlet extends HttpServlet {
 					w = new IndexWriter(directory, config);
 					w.deleteDocuments(new Term("id", docId.intern()));
 					request.setAttribute("info", "Successfull deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
+					request.setAttribute("muted", "Successfull deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
 				} catch (Exception e) {
 					request.setAttribute("error", "Error during deindex doc:'" + docId + "' in index:' " + indexName + "' cause:"+ e.getMessage());
 					log.error("Error during deindex doc:'" + docId + "' in index:'" + indexName + "'.", e);
@@ -132,7 +139,12 @@ public class IndexServlet extends HttpServlet {
 				} catch (ParseException e) {
 					request.setAttribute("error", "Query parse exception:'" + indexName + "' '" + query + "', cause:" + e.getMessage());
 				} catch (IndexNotFoundException e) {
-					request.setAttribute("error", "Cannot find index:'" + indexName + "'.");
+					if("defaultIndex".equals(indexName)) {
+						request.setAttribute("searcher", null);
+						request.setAttribute("hits", new ScoreDoc[0]);
+					} else {
+						request.setAttribute("error", "Cannot find index:'" + indexName + "'.");
+					}
 				}
 			}
 			analyzer.close();

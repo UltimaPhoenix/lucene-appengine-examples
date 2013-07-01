@@ -34,9 +34,9 @@
 	<div class="container">
 	<h1>Welcome to Lucene AppEngine demo application!</h1>
 	<br />
-	<p class="text-info"><%= request.getAttribute("info") != null ? request.getAttribute("info") : "" %></p>
+	<p class="muted"><%= request.getAttribute("muted") != null ? request.getAttribute("muted") : "" %></p>
 	<p class="text-error"><%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %></p>
-	<br />
+	<p class="text-info"><%= request.getAttribute("info") != null ? request.getAttribute("info") : "" %></p>
 		<%
 			ScoreDoc[] hits = (ScoreDoc[]) request.getAttribute("hits");
 			if(hits != null) {
