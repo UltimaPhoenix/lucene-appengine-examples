@@ -34,28 +34,30 @@
 	<div class="container">
 	<h1>Welcome to Lucene AppEngine demo application!</h1>
 	<br />
-	<h3><%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %></h3>
-	<ol>
+	<p class="text-info"><%= request.getAttribute("info") != null ? request.getAttribute("info") : "" %></p>
+	<p class="text-error"><%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %></p>
+	<br />
 		<%
 			ScoreDoc[] hits = (ScoreDoc[]) request.getAttribute("hits");
 			if(hits != null) {
 				IndexSearcher searcher = (IndexSearcher) request.getAttribute("searcher");
-				out.write("Found " + hits.length + " hits. <br />");
+		%>
+	<p class="text-success">Found <%= hits.length %> hits</p>
+		<ol>
+<%
 				String indexName = request.getParameter("indexName");
 				String query = request.getParameter("query");
 				for(int i=0;i<hits.length;++i) {
 				    Document d = searcher.doc(hits[i].doc);
 				    String docId = URLEncoder.encode(d.get("id"), "UTF-8");
-				%>
+%>
 				<li title="id=<%= docId %>">
-				  	<b><%= d.get("title") %></b> --
+					<textarea rows="1" class="input-xxlarge" readonly="readonly"><%= d.get("title") %></textarea> -- 
 				  	<a href="deindex.do?action=deindex&docId=<%= docId %>&indexName=<%= indexName %>&query=<%= query %>">Deindex</a>
 				</li>
-				<%
-				}
-			}
-		%>
-	</ol>
+			<% } %> 
+			</ol>
+		<% } %>
 	<br />
 	<div>
 		<h3>Index Interaction</h3>
@@ -69,8 +71,10 @@
 			<%}%>
 			</select>
 			with
-			<input type="text" size="100" name="query" placeholder="Fill with query '*' means all"  value="<%= request.getParameter("query") != null ? request.getParameter("query") : "" %>" class="input-medium search-query"/>
-			<input type="submit" name="action" value="search" class="btn" />
+			<div class="input-append">
+				<input type="text" size="100" name="query" placeholder="Fill with query '*' means all"  value="<%= request.getParameter("query") != null ? request.getParameter("query") : "" %>" class="input-medium search-query"/>
+				<input type="submit" name="action" value="search" class="btn" />
+			</div>
 		</form>
 		<form action="index.do" method="post" class="form-inline">
 			Index:
@@ -82,8 +86,10 @@
 			<%}%>
 			</select>
 			text
-			<input type="text" size="100" name="text" placeholder="Fill with text to index" value="<%= request.getParameter("text") != null ? request.getParameter("text") : "" %>"/>
-			<input type="submit" name="action" value="index" class="btn" />
+			<div class="input-append">
+				<input type="text" size="100" name="text" placeholder="Fill with text to index" value="<%= request.getParameter("text") != null ? request.getParameter("text") : "" %>"/>
+				<input type="submit" name="action" value="index" class="btn" />
+			</div>
 	</form>
 	</div>
 	<div class="tabbable">

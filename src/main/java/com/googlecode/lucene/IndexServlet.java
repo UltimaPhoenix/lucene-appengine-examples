@@ -67,7 +67,7 @@ public class IndexServlet extends HttpServlet {
 				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
 				final IndexWriter w = new IndexWriter(directory, config);
 				
-				request.setAttribute("message", "Indexed in index '" + indexName + "' string: " + text);
+				request.setAttribute("info", "Indexed in index '" + indexName + "' string: " + text.substring(0, Math.min(70, text.length())) + (text.length() > 70 ? "..." : ""));
 				long start = System.currentTimeMillis();
 				try {
 					addDoc(w, text);
@@ -86,9 +86,9 @@ public class IndexServlet extends HttpServlet {
 				final IndexWriter w = new IndexWriter(directory, config);
 				try {
 					w.deleteAll();
-					request.setAttribute("message", "Successfull cleared index:'" + indexName + "'.");
+					request.setAttribute("info", "Successfull cleared index:'" + indexName + "'.");
 				} catch (Exception e) {
-					request.setAttribute("message", "Error during clear index:'" + indexName + "' cause:" + e.getMessage());
+					request.setAttribute("error", "Error during clear index:'" + indexName + "' cause:" + e.getMessage());
 					log.error("Error during clear index '{}'.", indexName, e);
 				} finally {
 					w.close();
@@ -100,9 +100,9 @@ public class IndexServlet extends HttpServlet {
 				try {
 					w = new IndexWriter(directory, config);
 					w.deleteDocuments(new Term("id", docId.intern()));
-					request.setAttribute("message", "Successfull deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
+					request.setAttribute("info", "Successfull deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
 				} catch (Exception e) {
-					request.setAttribute("message", "Error during deindex doc:'" + docId + "' in index:' " + indexName + "' cause:"+ e.getMessage());
+					request.setAttribute("error", "Error during deindex doc:'" + docId + "' in index:' " + indexName + "' cause:"+ e.getMessage());
 					log.error("Error during deindex doc:'" + docId + "' in index:'" + indexName + "'.", e);
 				} finally {
 					if(w != null) w.close();
@@ -116,7 +116,7 @@ public class IndexServlet extends HttpServlet {
 				try {
 					Query q = new QueryParser(LUCENE_VERSION, "title", analyzer).parse(query);
 				
-					request.setAttribute("message", "Result for index '" + indexName + "' query '" + query + "'");
+					request.setAttribute("info", "Result for index '" + indexName + "' query '" + query + "'");
 					int hitsPerPage = 10;
 					reader = DirectoryReader.open(directory);
 					long start = System.currentTimeMillis();
@@ -130,9 +130,9 @@ public class IndexServlet extends HttpServlet {
 					request.setAttribute("searcher", searcher);
 					request.setAttribute("hits", hits);
 				} catch (ParseException e) {
-					request.setAttribute("message", "Query parse exception:'" + indexName + "' '" + query + "', cause:" + e.getMessage());
+					request.setAttribute("error", "Query parse exception:'" + indexName + "' '" + query + "', cause:" + e.getMessage());
 				} catch (IndexNotFoundException e) {
-					request.setAttribute("message", "Cannot find index:'" + indexName + "'.");
+					request.setAttribute("error", "Cannot find index:'" + indexName + "'.");
 				}
 			}
 			analyzer.close();
