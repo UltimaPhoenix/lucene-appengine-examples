@@ -54,6 +54,7 @@ public class IndexServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String indexName = request.getParameter("indexName") == null ? "defaultIndex" : request.getParameter("indexName");
+		final String action = request.getParameter("action");
 		final GaeDirectory directory = new GaeDirectory(indexName);
 		try {
 			final String text = request.getParameter("text");
@@ -62,7 +63,6 @@ public class IndexServlet extends HttpServlet {
 			
 			request.setAttribute("index", indexName);
 			
-			final String action = request.getParameter("action");
 			if("index".equalsIgnoreCase(action)) {
 				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
 				final IndexWriter w = new IndexWriter(directory, config);
@@ -82,7 +82,7 @@ public class IndexServlet extends HttpServlet {
 			} else if("delete".equalsIgnoreCase(action)) {
 				try {
 					directory.delete();
-					request.setAttribute("info", "Successfull deleted index:'" + indexName + "'.");
+					request.setAttribute("info", "Successfully deleted index:'" + indexName + "'.");
 				} catch (RuntimeException e) {
 					request.setAttribute("error", "Error during delete index:'" + indexName + "' cause:" + e.getMessage());
 					log.error("Error during delete index '{}'.", indexName, e);
@@ -92,7 +92,7 @@ public class IndexServlet extends HttpServlet {
 				final IndexWriter w = new IndexWriter(directory, config);
 				try {
 					w.deleteAll();
-					request.setAttribute("info", "Successfull cleared index:'" + indexName + "'.");
+					request.setAttribute("info", "Successfully cleared index:'" + indexName + "'.");
 				} catch (Exception e) {
 					request.setAttribute("error", "Error during clear index:'" + indexName + "' cause:" + e.getMessage());
 					log.error("Error during clear index '{}'.", indexName, e);
@@ -106,16 +106,18 @@ public class IndexServlet extends HttpServlet {
 				try {
 					w = new IndexWriter(directory, config);
 					w.deleteDocuments(new Term("id", docId.intern()));
-					request.setAttribute("info", "Successfull deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
-					request.setAttribute("muted", "Successfull deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
+					request.setAttribute("info", "Successfully deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
+					request.setAttribute("muted", "Successfully deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
 				} catch (Exception e) {
 					request.setAttribute("error", "Error during deindex doc:'" + docId + "' in index:' " + indexName + "' cause:"+ e.getMessage());
 					log.error("Error during deindex doc:'" + docId + "' in index:'" + indexName + "'.", e);
 				} finally {
 					if(w != null) w.close();
 				}
-			} else if("add".equalsIgnoreCase(action)) {
-				//nothing to do created during new GaeDirectory()
+			} else if("add".equalsIgnoreCase(action)) {//do creating an empty index
+				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
+				IndexWriter w = new IndexWriter(directory, config);
+				w.close();
 			}
 			if("search".equalsIgnoreCase(action) || "deindex".equalsIgnoreCase(action)) {
 				IndexReader reader = null;
