@@ -123,7 +123,9 @@ public class IndexServlet extends HttpServlet {
 				IndexReader reader = null;
 				IndexSearcher searcher = null;
 				try {
-					Query q = new QueryParser(LUCENE_VERSION, "title", analyzer).parse(query);
+					QueryParser queryParser = new QueryParser(LUCENE_VERSION, "title", analyzer);
+					queryParser.setAllowLeadingWildcard(true);
+					Query q = queryParser.parse(query);
 				
 					request.setAttribute("info", "Result for index '" + indexName + "' query '" + query + "'");
 					int hitsPerPage = 10;

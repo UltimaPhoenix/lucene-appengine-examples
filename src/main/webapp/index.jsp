@@ -11,7 +11,7 @@
 <head>
 	<title>Lucene AppEngine 4.3.0-SNAPSHOT Demo</title>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
-	<link href="http://twitter.github.io/bootstrap/assets/css/docs.css" rel="stylesheet">
+	<link href="http://getbootstrap.com/2.3.2/assets/css/docs.css" rel="stylesheet">
 	<link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js" type="text/javascript"></script>
 	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
@@ -34,19 +34,27 @@
 	<div class="container">
 	<h1>Welcome to Lucene AppEngine demo application!</h1>
 	<br />
-	<p class="muted"><%= request.getAttribute("muted") != null ? request.getAttribute("muted") : "" %></p>
-	<p class="text-error"><%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %></p>
-	<p class="text-info"><%= request.getAttribute("info") != null ? request.getAttribute("info") : "" %></p>
+	<%
+		Object muted = request.getAttribute("muted");
+		Object error = request.getAttribute("error");
+		Object info = request.getAttribute("info");
+		String indexName = request.getParameter("indexName");
+		String query = request.getParameter("query");
+	%>
+	<p class="muted"><%= muted != null ? muted : "" %></p>
+	<p class="text-error"><%= error != null ? error : "" %></p>
+	<p class="text-info"><%= info != null ? info : "" %></p>
 		<%
 			ScoreDoc[] hits = (ScoreDoc[]) request.getAttribute("hits");
 			if(hits != null) {
 				IndexSearcher searcher = (IndexSearcher) request.getAttribute("searcher");
 		%>
-	<p class="text-success">Found <%= hits.length %> hits</p>
+	<p class="text-success">Found <%= hits.length %> hits.</p>
+	<p class="text-info"><b><%= hits.length == 0 && "*".equals(query) ? 
+			"Index is empty; try to index something filling the blue input box" : 
+				hits.length == 0 ? " Try to index something filling the blue input box" : "" %></b></p>
 		<ol>
 <%
-				String indexName = request.getParameter("indexName");
-				String query = request.getParameter("query");
 				for(int i=0;i<hits.length;++i) {
 				    Document d = searcher.doc(hits[i].doc);
 				    String docId = URLEncoder.encode(d.get("id"), "UTF-8");
@@ -75,7 +83,7 @@
 					<%}%>
 					</select>
 					with
-					<div class="input-append">
+					<div class="input-append control-group <%= error != null && query != null ? "error" : "" %>">
 						<input type="text" size="100" name="query" placeholder="Fill with query '*' means all"  value="<%= request.getParameter("query") != null ? request.getParameter("query") : "" %>" class="input-large search-query"/>
 						<input type="submit" name="action" value="search" class="btn" />
 					</div>
@@ -90,7 +98,7 @@
 					<%}%>
 					</select>
 					text
-					<div class="input-append">
+					<div class="input-append control-group <%= hits != null && hits.length == 0 ? "info" : "" %>">
 						<input type="text" size="100" name="text" placeholder="Fill with text to index" value="<%= request.getParameter("text") != null ? request.getParameter("text") : "" %>" class="input-large"/>
 						<input type="submit" name="action" value="index" class="btn" />
 					</div>

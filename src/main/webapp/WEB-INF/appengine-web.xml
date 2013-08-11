@@ -6,7 +6,7 @@
         http://googleappengine.googlecode.com/svn/trunk/java/src/main/com/google/appengine/tools/development/appengine-web.xsd">
 
 	<application>bigtable-lucene</application>
-	<version>430-1-priority</version>
+	<version>430-2-priority</version>
 	<threadsafe>true</threadsafe>
 
 	<static-files>
