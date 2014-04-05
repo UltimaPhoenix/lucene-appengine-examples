@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.lang3.StringEscapeUtils"%>
 <%@page import="org.apache.lucene.document.Document"%>
 <%@page import="org.apache.lucene.search.IndexSearcher"%>
 <%@page import="org.apache.lucene.search.ScoreDoc"%>
@@ -35,15 +36,15 @@
 	<h1>Welcome to Lucene AppEngine demo application!</h1>
 	<br />
 	<%
-		Object muted = request.getAttribute("muted");
-		Object error = request.getAttribute("error");
-		Object info = request.getAttribute("info");
+		String muted = (String) request.getAttribute("muted");
+		String error = (String) request.getAttribute("error");
+		String info = (String) request.getAttribute("info");
 		String indexName = request.getParameter("indexName");
 		String query = request.getParameter("query");
 	%>
-	<p class="muted"><%= muted != null ? muted : "" %></p>
-	<p class="text-error"><%= error != null ? error : "" %></p>
-	<p class="text-info"><%= info != null ? info : "" %></p>
+	<p class="muted"><%= muted != null ? StringEscapeUtils.escapeHtml4(muted) : "" %></p>
+	<p class="text-error"><%= error != null ? StringEscapeUtils.escapeHtml4(error) : "" %></p>
+	<p class="text-info"><%= info != null ? StringEscapeUtils.escapeHtml4(info) : "" %></p>
 		<%
 			ScoreDoc[] hits = (ScoreDoc[]) request.getAttribute("hits");
 			if(hits != null) {
@@ -84,7 +85,7 @@
 					</select>
 					with
 					<div class="input-append control-group <%= error != null && query != null ? "error" : "" %>">
-						<input type="text" size="100" name="query" placeholder="Fill with query '*' means all"  value="<%= request.getParameter("query") != null ? request.getParameter("query") : "" %>" class="input-large search-query"/>
+						<input type="text" size="100" name="query" placeholder="Fill with query '*' means all"  value="<%= request.getParameter("query") != null ? StringEscapeUtils.escapeHtml4(request.getParameter("query")) : "" %>" class="input-large search-query"/>
 						<input type="submit" name="action" value="search" class="btn" />
 					</div>
 				</form>
@@ -99,7 +100,7 @@
 					</select>
 					text
 					<div class="input-append control-group <%= hits != null && hits.length == 0 ? "info" : "" %>">
-						<input type="text" size="100" name="text" placeholder="Fill with text to index" value="<%= request.getParameter("text") != null ? request.getParameter("text") : "" %>" class="input-large"/>
+						<input type="text" size="100" name="text" placeholder="Fill with text to index" value="<%= request.getParameter("text") != null ? StringEscapeUtils.escapeHtml4(request.getParameter("text")) : "" %>" class="input-large"/>
 						<input type="submit" name="action" value="index" class="btn" />
 					</div>
 				</form>
