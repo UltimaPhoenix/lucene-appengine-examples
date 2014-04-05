@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lucene AppEngine 1.0.3 Demo</title>
+	<title>Lucene AppEngine 1.2.0 Demo</title>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
 	<link href="http://getbootstrap.com/2.3.2/assets/css/docs.css" rel="stylesheet">
 	<link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">
@@ -142,12 +142,12 @@
 <footer class="footer">
   <div class="container">
   	<p class="muted credit">Created by: Fabio Grucci</p>
-	<p class="muted credit">Powered by: Google App Engine (GAE), Lucene-AppEngine (LAE) and Apache Lucene, Bootstrap</p>
+	<p class="muted credit">Powered by: Google App Engine (GAE), LuceneAppEngine (LAE) and Apache Lucene, Bootstrap</p>
     <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>.</p>
     <ul class="footer-links">
       <li><a href="http://code.google.com/p/lucene-appengine-examples">Source</a></li>
       <li class="muted">·</li>
-      <li><a href="http://code.google.com/p/luceneappengine">Lucene-AppEngine project (LAE)</a></li>
+      <li><a href="http://code.google.com/p/luceneappengine">LuceneAppEngine project (LAE)</a></li>
       <li class="muted">·</li>
       <li><a href="http://co-de-generation.blogspot.it">Author Blog</a></li>
     </ul>
