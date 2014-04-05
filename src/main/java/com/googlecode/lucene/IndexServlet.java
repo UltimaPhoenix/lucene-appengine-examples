@@ -25,6 +25,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,9 +160,12 @@ public class IndexServlet extends HttpServlet {
 			}
 			analyzer.close();
 			getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-		} finally {
-			directory.close();
-		}
+		} catch (LockObtainFailedException e){
+		    request.setAttribute("error", "Cannot acquire lock to the :'" + indexName + "' for operation '" + action + "'.Other indexing operation are executing please try again later.");
+		    getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+    	} finally {
+    	    directory.close();
+    	}
 	}
 
 	private static void addDoc(IndexWriter w, String value) throws CorruptIndexException, IOException {
