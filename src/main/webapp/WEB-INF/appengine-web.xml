@@ -6,7 +6,7 @@
         http://googleappengine.googlecode.com/svn/trunk/java/src/main/com/google/appengine/tools/development/appengine-web.xsd">
 
 	<application>bigtable-lucene</application>
-	<version>lae-103</version>
+	<version>lae-110</version>
 	<threadsafe>true</threadsafe>
 
 	<static-files>
@@ -14,7 +14,7 @@
 	</static-files>
 	
 	<class-loader-config>
-        <priority-specifier filename="luceneappengine-1.0.3.jar"/>
+        <priority-specifier filename="luceneappengine-1.1.0.jar"/>
 	</class-loader-config>
 
 	<system-properties>
