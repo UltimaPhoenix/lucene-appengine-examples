@@ -3,13 +3,13 @@
 <%@page import="org.apache.lucene.search.ScoreDoc"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.apache.lucene.index.Term"%>
-<%@page import="com.googlecode.lucene.appengine.LuceneIndex"%>
-<%@page import="com.googlecode.lucene.appengine.GaeDirectory"%>
+<%@page import="com.googlecode.luceneappengine.LuceneIndex"%>
+<%@page import="com.googlecode.luceneappengine.GaeDirectory"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lucene AppEngine 4.3.0-SNAPSHOT Demo</title>
+	<title>Lucene AppEngine 1.0.3 Demo</title>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
 	<link href="http://getbootstrap.com/2.3.2/assets/css/docs.css" rel="stylesheet">
 	<link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">

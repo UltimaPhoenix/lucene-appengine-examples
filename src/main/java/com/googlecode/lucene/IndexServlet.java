@@ -29,8 +29,8 @@ import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.lucene.appengine.GaeDirectory;
-import com.googlecode.lucene.appengine.GaeLuceneUtil;
+import com.googlecode.luceneappengine.GaeDirectory;
+import com.googlecode.luceneappengine.GaeLuceneUtil;
 
 /**
  * Servlet implementation class IndexServlet
@@ -44,7 +44,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(IndexServlet.class);
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_43;
+	private static final Version LUCENE_VERSION = Version.LUCENE_45;
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -123,9 +123,9 @@ public class IndexServlet extends HttpServlet {
 				IndexReader reader = null;
 				IndexSearcher searcher = null;
 				try {
-					QueryParser queryParser = new QueryParser(LUCENE_VERSION, "title", analyzer);
-					queryParser.setAllowLeadingWildcard(true);
-					Query q = queryParser.parse(query);
+				    QueryParser queryParser = new QueryParser(LUCENE_VERSION, "title", analyzer);
+                    queryParser.setAllowLeadingWildcard(true);
+                    Query q = queryParser.parse(query);
 				
 					request.setAttribute("info", "Result for index '" + indexName + "' query '" + query + "'");
 					int hitsPerPage = 10;
