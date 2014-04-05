@@ -55,6 +55,12 @@ public class IndexServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String indexName = request.getParameter("indexName") == null ? "defaultIndex" : request.getParameter("indexName");
 		final String action = request.getParameter("action");
+		
+		if ("".equals(indexName)) {
+		    request.setAttribute("error", "Index name should be not empty, Operation " + action + " not executed.");
+		    getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+		    return;
+		}
 		final GaeDirectory directory = new GaeDirectory(indexName);
 		try {
 			final String text = request.getParameter("text");
