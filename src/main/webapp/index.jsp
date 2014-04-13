@@ -12,7 +12,7 @@
 <head>
 	<title>Lucene AppEngine 1.2.0 Demo</title>
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
-	<link href="http://getbootstrap.com/2.3.2/assets/css/docs.css" rel="stylesheet">
+	<link href="//css/docs.css" rel="stylesheet">
 	<link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js" type="text/javascript"></script>
 	<script type="text/javascript" src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
