@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.luceneappengine</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -13,15 +13,15 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<maven.compiler.target>1.6</maven.compiler.target>
-		<lucene.version>4.7.1</lucene.version>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<lucene.version>4.7.2</lucene.version>
 		<luceneappengine.version>1.2.0</luceneappengine.version>
 		<slf4j.version>1.7.7</slf4j.version>
 		<logback.version>1.1.2</logback.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
-		<gae.plugin.version>0.9.6</gae.plugin.version>
-		<gae.version>1.8.8</gae.version>
+		<gae.plugin.version>1.9.4</gae.plugin.version>
+		<gae.version>1.9.4</gae.version>
 		<gae.application.version>test</gae.application.version>
 		<gae.serverId>bigtable-lucene</gae.serverId>
 		<splitJars>true</splitJars>
@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
-			<version>1.0</version>
+			<version>1.0.2</version>
 		</dependency>
 
 		<dependency>
@@ -81,14 +81,32 @@
 		<!-- <version>${gae.version}</version> -->
 		<!-- <scope>test</scope> -->
 		<!-- </dependency> -->
-		
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-testing</artifactId>
+            <version>${gae.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-stubs</artifactId>
+            <version>${gae.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
+		
 
 		<dependency>
 			<groupId>com.googlecode.luceneappengine</groupId>
@@ -206,23 +224,13 @@
 				</configuration>
 			</plugin>
 
-			<!-- The actual maven-gae-plugin. Type "mvn gae:run" to run project, "mvn 
-				gae:deploy" to upload to GAE. -->
+			<!-- Type "mvn appengine:devserver" to run and "mvn appengine:update" to upload to GAE. -->
 			<plugin>
-				<groupId>net.kindleit</groupId>
-				<artifactId>maven-gae-plugin</artifactId>
+				<groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
 				<version>${gae.plugin.version}</version>
-				<dependencies>
-					<dependency>
-						<groupId>net.kindleit</groupId>
-						<artifactId>gae-runtime</artifactId>
-						<version>${gae.version}</version>
-						<type>pom</type>
-					</dependency>
-				</dependencies>
-				<!-- mvn gae:debug freeze; workaround: use gae:run with debug option -->
 				<configuration>
-				    <splitJars>true</splitJars>
+				    <enableJarClasses>true</enableJarClasses>
 					<jvmFlags>
 						<jvmFlag>-Xdebug</jvmFlag>
 						<jvmFlag>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000</jvmFlag>
@@ -235,7 +243,7 @@
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
-					<goals>gae:deploy</goals>
+					<goals>appengine:update</goals>
 				</configuration>
 			</plugin>
 

@@ -6,11 +6,12 @@
         http://googleappengine.googlecode.com/svn/trunk/java/src/main/com/google/appengine/tools/development/appengine-web.xsd">
 
 	<application>bigtable-lucene</application>
-	<version>lae-120</version>
+	<version>lae-121</version>
 	<threadsafe>true</threadsafe>
 
 	<static-files>
 		<include path="/favicon.ico" />
+		<include path="/css/**" />
 	</static-files>
 	
 	<class-loader-config>
