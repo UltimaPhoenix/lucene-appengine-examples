@@ -15,7 +15,7 @@
 	</static-files>
 	
 	<class-loader-config>
-        <priority-specifier filename="luceneappengine-2.0.0-SNAPSHOT.jar"/>
+        <priority-specifier filename="luceneappengine-2.0.0.jar"/>
 	</class-loader-config>
 
 	<system-properties>
