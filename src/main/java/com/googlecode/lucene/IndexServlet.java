@@ -1,13 +1,6 @@
 package com.googlecode.lucene;
 
-import java.io.IOException;
-import java.util.UUID;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.googlecode.luceneappengine.GaeDirectory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -17,7 +10,6 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexNotFoundException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -30,8 +22,15 @@ import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.googlecode.luceneappengine.GaeDirectory;
-import com.googlecode.luceneappengine.GaeLuceneUtil;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import static com.googlecode.luceneappengine.GaeLuceneUtil.getIndexWriterConfig;
 
 /**
  * Servlet implementation class IndexServlet
@@ -62,27 +61,20 @@ public class IndexServlet extends HttpServlet {
 		    getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 		    return;
 		}
-		final GaeDirectory directory = new GaeDirectory(indexName);
-		try {
+		try (GaeDirectory directory = new GaeDirectory(indexName); Analyzer analyzer = new PorterAnalyzer(LUCENE_VERSION)){
 			final String text = request.getParameter("text");
 			final String query = request.getParameter("query");
-			final Analyzer analyzer = new PorterAnalyzer(LUCENE_VERSION);
 			
 			request.setAttribute("index", indexName);
 			
 			if("index".equalsIgnoreCase(action)) {
-				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
-				final IndexWriter w = new IndexWriter(directory, config);
-				
-				request.setAttribute("info", "Indexed in index '" + indexName + "' string: " + text.substring(0, Math.min(70, text.length())) + (text.length() > 70 ? "..." : ""));
 				long start = System.currentTimeMillis();
-				try {
+				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer))) {
+    				request.setAttribute("info", "Indexed in index '" + indexName + "' string: " + text.substring(0, Math.min(70, text.length())) + (text.length() > 70 ? "..." : ""));
 					addDoc(w, text);
 				} catch(Exception e) {
 					request.setAttribute("message", e.getMessage());
 					log.error("Error indexing text {}.", text, e);
-				} finally {
-					w.close();
 				}
 				long end = System.currentTimeMillis();
 				log.info("Search: {} millis.", end - start);
@@ -95,35 +87,25 @@ public class IndexServlet extends HttpServlet {
 					log.error("Error during delete index '{}'.", indexName, e);
 				}
 			} else if("clear".equalsIgnoreCase(action)) {
-				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
-				final IndexWriter w = new IndexWriter(directory, config);
-				try {
+				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer))) {
 					w.deleteAll();
 					request.setAttribute("info", "Successfully cleared index:'" + indexName + "'.");
 				} catch (Exception e) {
 					request.setAttribute("error", "Error during clear index:'" + indexName + "' cause:" + e.getMessage());
 					log.error("Error during clear index '{}'.", indexName, e);
-				} finally {
-					w.close();
 				}
 			} else if("deindex".equalsIgnoreCase(action)) {
 				final String docId = request.getParameter("docId");
-				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
-				IndexWriter w = null;
-				try {
-					w = new IndexWriter(directory, config);
+				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer))){
 					w.deleteDocuments(new Term("id", docId.intern()));
 					request.setAttribute("info", "Successfully deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
 					request.setAttribute("muted", "Successfully deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
 				} catch (Exception e) {
 					request.setAttribute("error", "Error during deindex doc:'" + docId + "' in index:' " + indexName + "' cause:"+ e.getMessage());
 					log.error("Error during deindex doc:'" + docId + "' in index:'" + indexName + "'.", e);
-				} finally {
-					if(w != null) w.close();
 				}
 			} else if("add".equalsIgnoreCase(action)) {//do creating an empty index
-				final IndexWriterConfig config = GaeLuceneUtil.getIndexWriterConfig(LUCENE_VERSION, analyzer);
-				IndexWriter w = new IndexWriter(directory, config);
+				IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer));
 				w.close();
 			}
 			if("search".equalsIgnoreCase(action) || "deindex".equalsIgnoreCase(action)) {
@@ -158,13 +140,10 @@ public class IndexServlet extends HttpServlet {
 					}
 				}
 			}
-			analyzer.close();
 			getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 		} catch (LockObtainFailedException e){
 		    request.setAttribute("error", "Cannot acquire lock to the :'" + indexName + "' for operation '" + action + "'.Other indexing operation are executing please try again later.");
 		    getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-    	} finally {
-    	    directory.close();
     	}
 	}
 
