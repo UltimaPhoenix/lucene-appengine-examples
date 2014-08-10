@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.luceneappengine</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>2.0.1</version>
+	<version>2.1.0</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -15,13 +15,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
-		<lucene.version>4.8.1</lucene.version>
-		<luceneappengine.version>2.0.1</luceneappengine.version>
+		<lucene.version>4.9.0</lucene.version>
+		<luceneappengine.version>2.1.0</luceneappengine.version>
 		<slf4j.version>1.7.7</slf4j.version>
 		<logback.version>1.1.2</logback.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
-		<gae.plugin.version>1.9.7</gae.plugin.version>
-		<gae.version>1.9.7</gae.version>
+		<gae.plugin.version>1.9.8</gae.plugin.version>
+		<gae.version>1.9.8</gae.version>
 		<gae.application.version>test</gae.application.version>
 		<gae.serverId>bigtable-lucene</gae.serverId>
 		<splitJars>true</splitJars>
@@ -201,6 +201,14 @@
                 <plugin>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.7</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-archetype-plugin</artifactId>
+                    <version>2.2</version>
                 </plugin>
 			</plugins>
 		</pluginManagement>	

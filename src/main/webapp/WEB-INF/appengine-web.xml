@@ -6,7 +6,7 @@
         http://googleappengine.googlecode.com/svn/trunk/java/src/main/com/google/appengine/tools/development/appengine-web.xsd">
 
 	<application>bigtable-lucene</application>
-	<version>lae-201</version>
+	<version>lae-210</version>
 	<threadsafe>true</threadsafe>
 
 	<static-files>
@@ -15,11 +15,11 @@
 	</static-files>
 	
 	<class-loader-config>
-        <priority-specifier filename="luceneappengine-2.0.1.jar"/>
+        <priority-specifier filename="luceneappengine-2.1.0.jar"/>
 	</class-loader-config>
 
 	<system-properties>
-		<property name="java.util.logging.config.file" value="WEB-INF/classes/logging.properties" />
+		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
 	    <property name="os.version" value="1.0.GAE whatever" />
 	    <property name="os.arch" value="GAE whatever" />
 	</system-properties>

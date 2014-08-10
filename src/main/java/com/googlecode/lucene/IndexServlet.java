@@ -44,7 +44,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(IndexServlet.class);
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_48;
+	private static final Version LUCENE_VERSION = Version.LUCENE_4_9;
 	
 	public static final int MAX_RESULTS = 200;
 	public static final int MAX_PER_PAGE = 10;
