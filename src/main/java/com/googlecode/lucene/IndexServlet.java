@@ -8,6 +8,7 @@ import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexNotFoundException;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
@@ -18,7 +19,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.LockObtainFailedException;
-import org.apache.lucene.util.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +44,6 @@ public class IndexServlet extends HttpServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(IndexServlet.class);
 
-	private static final Version LUCENE_VERSION = Version.LUCENE_4_10_0;
-	
 	public static final int MAX_RESULTS = 200;
 	public static final int MAX_PER_PAGE = 10;
 	public static final String ENCODING = "UTF-8";
@@ -65,7 +63,7 @@ public class IndexServlet extends HttpServlet {
 		    getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 		    return;
 		}
-		try (GaeDirectory directory = new GaeDirectory(indexName); Analyzer analyzer = new PorterAnalyzer(LUCENE_VERSION)){
+		try (GaeDirectory directory = new GaeDirectory(indexName); Analyzer analyzer = new PorterAnalyzer()){
 			final String text = request.getParameter("text");
 			final String query = request.getParameter("query");
 			final String page = request.getParameter("page");
@@ -74,7 +72,7 @@ public class IndexServlet extends HttpServlet {
 			
 			if("index".equalsIgnoreCase(action)) {
 				long start = System.currentTimeMillis();
-				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer))) {
+				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(analyzer))) {
     				request.setAttribute("info", "Indexed in index '" + indexName + "' string: " + text.substring(0, Math.min(70, text.length())) + (text.length() > 70 ? "..." : ""));
 					addDoc(w, text);
 				} catch(Exception e) {
@@ -92,7 +90,7 @@ public class IndexServlet extends HttpServlet {
 					log.error("Error during delete index '{}'.", indexName, e);
 				}
 			} else if("clear".equalsIgnoreCase(action)) {
-				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer))) {
+				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(analyzer))) {
 					w.deleteAll();
 					request.setAttribute("info", "Successfully cleared index:'" + indexName + "'.");
 				} catch (Exception e) {
@@ -101,7 +99,7 @@ public class IndexServlet extends HttpServlet {
 				}
 			} else if("deindex".equalsIgnoreCase(action)) {
 				final String docId = request.getParameter("docId");
-				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer))){
+				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(analyzer))){
 					w.deleteDocuments(new Term("id", docId.intern()));
 					request.setAttribute("info", "Successfully deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
 					request.setAttribute("muted", "Successfully deindexed doc:'" + docId + "' in index:'" + indexName + "'.");
@@ -110,14 +108,14 @@ public class IndexServlet extends HttpServlet {
 					log.error("Error during deindex doc:'" + docId + "' in index:'" + indexName + "'.", e);
 				}
 			} else if("add".equalsIgnoreCase(action)) {//do creating an empty index
-				IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(LUCENE_VERSION, analyzer));
+				IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(analyzer));
 				w.close();
 			}
 			if("search".equalsIgnoreCase(action) || "deindex".equalsIgnoreCase(action)) {
 				IndexReader reader = null;
 				IndexSearcher searcher = null;
 				try {
-				    QueryParser queryParser = new QueryParser(LUCENE_VERSION, "title", analyzer);
+				    QueryParser queryParser = new QueryParser("title", analyzer);
                     queryParser.setAllowLeadingWildcard(true);
                     Query q = queryParser.parse(query);
 				
@@ -130,7 +128,7 @@ public class IndexServlet extends HttpServlet {
 					reader = DirectoryReader.open(directory);
 					long start = System.currentTimeMillis();
 					searcher = new IndexSearcher(reader);
-					TopScoreDocCollector collector = TopScoreDocCollector.create(MAX_RESULTS, true);
+					TopScoreDocCollector collector = TopScoreDocCollector.create(MAX_RESULTS);
 					searcher.search(q, collector);
 					long end = System.currentTimeMillis();
 					log.info("Search: {} millis.", end - start);
@@ -166,7 +164,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static FieldType idType() {
 		FieldType idType = new FieldType();
-		idType.setIndexed(true);
+		idType.setIndexOptions(IndexOptions.DOCS);
 		idType.setStored(true);
 		idType.setTokenized(false);
 		return idType;
@@ -174,7 +172,7 @@ public class IndexServlet extends HttpServlet {
 
 	private static FieldType titleType() {
 		FieldType titleType = new FieldType();
-		titleType.setIndexed(true);
+		titleType.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
 		titleType.setStored(true);
 		return titleType;
 	}

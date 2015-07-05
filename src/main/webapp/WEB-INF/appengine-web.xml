@@ -5,9 +5,16 @@
         http://appengine.google.com/ns/1.0
         http://googleappengine.googlecode.com/svn/trunk/java/src/main/com/google/appengine/tools/development/appengine-web.xsd">
 
+	<module>default</module>
 	<application>bigtable-lucene</application>
-	<version>lae-220</version>
+	<version>lae-300</version>
 	<threadsafe>true</threadsafe>
+	<instance-class>F2</instance-class>
+	<automatic-scaling>
+		<min-idle-instances>0</min-idle-instances>
+		<max-idle-instances>1</max-idle-instances>
+	</automatic-scaling>
+
 
 	<static-files>
 		<include path="/favicon.ico" />
@@ -15,7 +22,7 @@
 	</static-files>
 	
 	<class-loader-config>
-        <priority-specifier filename="luceneappengine-2.2.0.jar"/>
+        <priority-specifier filename="luceneappengine-3.0.0-SNAPSHOT.jar"/>
 	</class-loader-config>
 
 	<system-properties>
