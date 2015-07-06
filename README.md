@@ -1,4 +1,4 @@
-# LAE Live Demo project #
+# LAE Live Demo project # [![Build Status](https://travis-ci.org/UltimaPhoenix/lucene-appengine-examples.svg?branch=master)](https://travis-ci.org/UltimaPhoenix/lucene-appengine-examples)
 
 ![https://lucene.apache.org/images/lucene_logo_green_300.png](https://lucene.apache.org/images/lucene_logo_green_300.png) ![https://www.google.com/accounts/ah/appengine.jpg](https://www.google.com/accounts/ah/appengine.jpg)
 
