@@ -3,7 +3,7 @@ LAE Live Demo project [![Build Status](https://travis-ci.org/UltimaPhoenix/lucen
 
 ![https://lucene.apache.org/images/lucene_logo_green_300.png](https://lucene.apache.org/images/lucene_logo_green_300.png) ![https://www.google.com/accounts/ah/appengine.jpg](https://www.google.com/accounts/ah/appengine.jpg)
 
-This project contains [live demo](http://bigtable-lucene.appspot.com) source code and examples and an how to for using lucene-appengine (LAE).
+This project contains [live demo](http://bigtable-lucene.appspot.com) source code and examples and an how to for using [luceneappengine](https://github.com/UltimaPhoenix/luceneappengine) (LAE).
 
 **Starting from LAE 2.0.0 release:**
 To deploy this demo on your own Google App Engine application:
