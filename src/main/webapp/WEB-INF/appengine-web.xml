@@ -7,7 +7,7 @@
 
 	<module>default</module>
 	<application>bigtable-lucene</application>
-	<version>lae-300</version>
+	<version>lae-310</version>
 	<threadsafe>true</threadsafe>
 	<instance-class>F4</instance-class>
 
@@ -17,7 +17,7 @@
 	</static-files>
 	
 	<class-loader-config>
-        <priority-specifier filename="luceneappengine-3.0.0.jar"/>
+        <priority-specifier filename="luceneappengine-3.1.0.jar"/>
 	</class-loader-config>
 
 	<system-properties>
