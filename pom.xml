@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.luceneappengine</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>3.1.0</version>
+	<version>3.1.1</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -16,7 +16,7 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<lucene.version>5.1.0</lucene.version>
-		<luceneappengine.version>3.1.0</luceneappengine.version>
+		<luceneappengine.version>3.1.1</luceneappengine.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<logback.version>1.1.3</logback.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
