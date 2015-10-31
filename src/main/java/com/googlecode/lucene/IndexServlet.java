@@ -72,15 +72,21 @@ public class IndexServlet extends HttpServlet {
 			
 			if("index".equalsIgnoreCase(action)) {
 				long start = System.currentTimeMillis();
+				boolean operationSuccess = true;
 				try (IndexWriter w = new IndexWriter(directory, getIndexWriterConfig(analyzer))) {
     				request.setAttribute("info", "Indexed in index '" + indexName + "' string: " + text.substring(0, Math.min(70, text.length())) + (text.length() > 70 ? "..." : ""));
 					addDoc(w, text);
+				} catch(LockObtainFailedException e) {
+					operationSuccess = false;
+					request.setAttribute("error", e.getMessage() + ". System is under heavy load, please try again later");
+					log.error("Error indexing text {}.", text, e);
 				} catch(Exception e) {
-					request.setAttribute("message", e.getMessage());
+					operationSuccess = false;
+					request.setAttribute("error", e.getMessage() + "Try again later");
 					log.error("Error indexing text {}.", text, e);
 				}
 				long end = System.currentTimeMillis();
-				log.info("Search: {} millis.", end - start);
+				log.info("Index completed:{} elapsed: {} millis.", operationSuccess, end - start);
 			} else if("delete".equalsIgnoreCase(action)) {
 				try {
 					directory.delete();
