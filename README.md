@@ -29,6 +29,7 @@ To deploy this demo on your own Google App Engine application:
 ```
 
 ## Changelog ##
+  * 27-12-2015: now build with the new released LAE 3.3.0 and LUCENE 5.4.0
   * 01-11-2015: now build with the new released LAE 3.2.0 and LUCENE 5.3.1
   * 13-09-2015: now build with the new released LAE 3.1.1 and LUCENE 5.1.0
   * 05-07-2015: now build with the new released LAE 3.0.0 and LUCENE 5.0.0, this is a major release with breaking changes check official site for details
