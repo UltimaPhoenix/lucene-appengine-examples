@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.luceneappengine</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>3.2.0</version>
+	<version>3.4.0</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -15,8 +15,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
-		<lucene.version>5.4.0</lucene.version>
-		<luceneappengine.version>3.3.0</luceneappengine.version>
+		<lucene.version>5.5.0</lucene.version>
+		<luceneappengine.version>3.4.0</luceneappengine.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
 		<gae.plugin.version>1.9.34</gae.plugin.version>
@@ -69,7 +69,7 @@
 			<artifactId>lucene-core</artifactId>
 			<version>${lucene.version}</version>
 		</dependency>
-		<dependency>
+		<dependency><!-- useful only to read old indexes created with older lucene version -->
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-backward-codecs</artifactId>
 			<version>${lucene.version}</version>
