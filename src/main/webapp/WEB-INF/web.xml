@@ -28,9 +28,4 @@
 		<servlet-name>IndexServlet</servlet-name>
 		<servlet-class>com.googlecode.lucene.IndexServlet</servlet-class>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>IndexServlet</servlet-name>
-		<url-pattern>/IndexServlet</url-pattern>
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
 </web-app>
