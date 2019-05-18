@@ -128,7 +128,7 @@ public class IndexServlet extends HttpServlet {
 					reader = DirectoryReader.open(directory);
 					long start = System.currentTimeMillis();
 					searcher = new IndexSearcher(reader);
-					TopScoreDocCollector collector = TopScoreDocCollector.create(MAX_RESULTS);
+					TopScoreDocCollector collector = TopScoreDocCollector.create(MAX_RESULTS, MAX_RESULTS);
 					searcher.search(q, collector);
 					long end = System.currentTimeMillis();
 					log.info("Search: {} millis.", end - start);
@@ -180,7 +180,7 @@ public class IndexServlet extends HttpServlet {
 	private static CustomAnalyzer customAnalyzer() throws IOException {
 		return CustomAnalyzer.builder()
 				.withTokenizer("standard")
-				.addTokenFilter("standard")
+				.addTokenFilter("classic")
 				.addTokenFilter("lowercase")
 				.addTokenFilter("stop")
 				.addTokenFilter("snowballporter")
