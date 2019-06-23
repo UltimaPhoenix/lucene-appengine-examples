@@ -15,12 +15,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<lucene.version>8.0.0</lucene.version>
-		<luceneappengine.version>4.2.0</luceneappengine.version>
+		<lucene.version>8.1.0</lucene.version>
+		<luceneappengine.version>4.3.0-SNAPSHOT</luceneappengine.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
-		<gae.plugin.version>1.9.71</gae.plugin.version>
-		<gae.version>1.9.71</gae.version>
+		<gae.plugin.version>1.9.75</gae.plugin.version>
+		<gae.version>1.9.75</gae.version>
 		<gae.application.version>test</gae.application.version>
 		<gae.serverId>bigtable-lucene</gae.serverId>
 		<splitJars>true</splitJars>
@@ -119,7 +119,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
+            <version>3.9</version>
         </dependency>
         
         <dependency>
