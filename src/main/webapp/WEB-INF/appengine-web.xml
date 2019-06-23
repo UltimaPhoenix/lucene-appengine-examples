@@ -7,7 +7,7 @@
 
 	<module>default</module>
 	<application>bigtable-lucene</application>
-	<version>lae-42-luc-81</version>
+	<version>lae-43-luc-81</version>
 	<threadsafe>true</threadsafe>
 	<instance-class>F4</instance-class>
 	<runtime>java8</runtime>
