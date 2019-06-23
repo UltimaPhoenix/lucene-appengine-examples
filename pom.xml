@@ -16,7 +16,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<lucene.version>8.1.0</lucene.version>
-		<luceneappengine.version>4.3.0-SNAPSHOT</luceneappengine.version>
+		<luceneappengine.version>4.3.0</luceneappengine.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
 		<gae.plugin.version>1.9.75</gae.plugin.version>
