@@ -174,10 +174,10 @@
 	<p class="muted credit">Powered by: Google App Engine (GAE), LuceneAppEngine (LAE) and Apache Lucene, Bootstrap</p>
     <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>.</p>
     <ul class="footer-links">
-      <li><a href="http://code.google.com/p/lucene-appengine-examples">Source</a></li>
-      <li class="muted">�</li>
-      <li><a href="http://code.google.com/p/luceneappengine">LuceneAppEngine project (LAE)</a></li>
-      <li class="muted">�</li>
+      <li><a href="https://github.com/UltimaPhoenix/lucene-appengine-examples">Source</a></li>
+      <li class="muted">-</li>
+      <li><a href="https://github.com/UltimaPhoenix/luceneappengine">LuceneAppEngine project (LAE)</a></li>
+      <li class="muted">-</li>
       <li><a href="http://co-de-generation.blogspot.it">Author Blog</a></li>
     </ul>
   </div>
