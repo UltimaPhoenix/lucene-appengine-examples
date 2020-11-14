@@ -40,6 +40,7 @@ To deploy this demo on your own Google App Engine application:
 ```
 
 ## Changelog ##
+  * 14-11-2020: now build with the new released LAE 4.5.0 and LUCENE 8.7.0
   * 01-07-2020: now build with the new released LAE 4.5.0 and LUCENE 8.6.0
   * 01-07-2020: now build with the new released LAE 4.4.0 and LUCENE 8.5.1 
   * 23-06-2019: now build with the new released LAE 4.3.0 and LUCENE 8.1.0
