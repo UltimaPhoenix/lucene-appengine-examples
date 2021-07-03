@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<lucene.version>8.8.1</lucene.version>
+		<lucene.version>8.9.0</lucene.version>
 		<luceneappengine.version>4.5.0</luceneappengine.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
@@ -141,19 +141,6 @@
             <version>${gae.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- <dependency> -->
-        <!-- <groupId>com.google.appengine</groupId> -->
-        <!-- <artifactId>appengine-api-labs</artifactId> -->
-        <!-- <version>${gae.version}</version> -->
-        <!-- <scope>test</scope> -->
-        <!-- </dependency> -->
-
-        <!-- <dependency> -->
-        <!-- <groupId>com.google.appengine</groupId> -->
-        <!-- <artifactId>appengine-api-stubs</artifactId> -->
-        <!-- <version>${gae.version}</version> -->
-        <!-- <scope>test</scope> -->
-        <!-- </dependency> -->
 	</dependencies>
 	
 	<build>
