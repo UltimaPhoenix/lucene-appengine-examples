@@ -5,7 +5,18 @@ LAE Live Demo project [![Build Status](https://travis-ci.org/UltimaPhoenix/lucen
 
 This project contains [live demo](http://bigtable-lucene.appspot.com) source code and examples and an how to for using [luceneappengine](https://github.com/UltimaPhoenix/luceneappengine) (LAE).
 
-**Starting from LAE 2.0.0 release:**
+**Starting from LAE 4.5.0 release:**
+To deploy this demo on your own Google App Engine application:
+* create your application in [Google App Engine](https://developers.google.com/appengine)
+* clone this repository
+* configure the [gcloud-maven-plugin](https://cloud.google.com/appengine/docs/standard/java/tools/migrate-maven) and your appengine-web.xml
+* and run the following commands
+```
+    mvn clean package
+    mvn appengine:deploy
+```
+
+**Starting from LAE 2.0.0 release to LAE 4.5.0 release:**
 To deploy this demo on your own Google App Engine application:
   * create your application in [Google App Engine](https://developers.google.com/appengine)
   * clone this repository
@@ -29,6 +40,7 @@ To deploy this demo on your own Google App Engine application:
 ```
 
 ## Changelog ##
+  * 01-07-2020: now build with the new released LAE 4.5.0 and LUCENE 8.6.0
   * 01-07-2020: now build with the new released LAE 4.4.0 and LUCENE 8.5.1 
   * 23-06-2019: now build with the new released LAE 4.3.0 and LUCENE 8.1.0
   * 09-06-2019: tested but not committed LAE-4.2.0 and LUCENE 7.7.2 (wip for 8.1)

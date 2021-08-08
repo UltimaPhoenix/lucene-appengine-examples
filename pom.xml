@@ -5,7 +5,7 @@
 
 	<groupId>com.googlecode.luceneappengine</groupId>
 	<artifactId>gae-test-index</artifactId>
-	<version>3.5.0</version>
+	<version>3.6.0</version>
 	<packaging>war</packaging>
 
 	<name>${gae.application.name}</name>
@@ -15,11 +15,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<lucene.version>8.5.1</lucene.version>
+		<lucene.version>8.6.0</lucene.version>
 		<luceneappengine.version>4.4.0</luceneappengine.version>
 		<slf4j.version>1.7.13</slf4j.version>
 		<gae.application.name>bigtablelucene</gae.application.name>
-		<gae.plugin.version>1.9.80</gae.plugin.version>
+		<gae.plugin.version>2.3.0</gae.plugin.version>
 		<gae.version>1.9.80</gae.version>
 		<gae.application.version>test</gae.application.version>
 		<gae.serverId>bigtable-lucene</gae.serverId>
@@ -248,10 +248,12 @@
 
 			<!-- Type "mvn appengine:devserver" to run and "mvn appengine:update" to upload to GAE. -->
 			<plugin>
-				<groupId>com.google.appengine</groupId>
+				<groupId>com.google.cloud.tools</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
 				<version>${gae.plugin.version}</version>
 				<configuration>
+					<projectId>bigtable-lucene</projectId>
+					<version>lae-45-luc-86</version>
 				    <enableJarClasses>true</enableJarClasses>
 					<jvmFlags>
 						<jvmFlag>-Xdebug</jvmFlag>
