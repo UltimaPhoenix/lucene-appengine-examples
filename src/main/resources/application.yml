@@ -1,0 +1,18 @@
+micronaut:
+  application:
+    name: lae-example
+  router:
+    static-resources:
+      default:
+        paths: classpath:public
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+  server:
+    cors:
+      #remove
+      enabled: true
+netty:
+  default:
+    allocator:
+      max-order: 3

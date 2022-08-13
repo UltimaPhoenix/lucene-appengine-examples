@@ -1,0 +1,152 @@
+<div class="container text-center">
+  <h1>Welcome to Lucene AppEngine demo application!</h1>
+  <br />
+  <div class="container text-start shadow-lg p-3 mb-5 bg-body rounded">
+    <h4>Index Interaction</h4>
+
+    <div class="row g-2 align-items-start align-items-center">
+      <span class="col-auto">Select an index to interact with</span>
+      <span class="col-auto">
+        <select class="form-select" [(ngModel)]="selectedIndex" >
+          <option *ngIf="availableIndexes == null" selected value="defaultIndex">Loading...</option>
+          <option *ngIf="availableIndexes?.length == 0" selected value="defaultIndex">defaultIndex</option>
+          <option *ngFor="let index of availableIndexes" [ngValue]="index">{{index}}</option>
+        </select>
+      </span>
+    </div>
+    <br>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <div class="nav-link active">{{selectedIndex}}</div>
+      </li>
+    </ul>
+    <br>
+    <div class="input-group mb-3">
+      <span class="input-group-text">Query</span>
+      <input type="text"  class="input-group-lg search-query" size="100" (keyup.enter)="searchText(selectedIndex, searchQuery)" [(ngModel)]="searchQuery" placeholder="write * to search everything" />
+      <button type="button" class="btn btn-primary" (click)="searchText(selectedIndex, searchQuery)" [disabled]="!searchQuery.length" ngmo>Search</button>
+    </div>
+    <div class="input-group mb-3" [ngClass]="{'alert alert-primary': highlightIndexButton}">
+      <span class="input-group-text">Add</span>
+      <input type="text" size="100" name="query" placeholder="some text" (keyup.enter)="indexText(selectedIndex, textToIndex)" [(ngModel)]="textToIndex" class="input-group-lg search-query"/>
+      <button type="button" class="btn btn-primary" (click)="indexText(selectedIndex, textToIndex)" [disabled]="!textToIndex.length">To Index</button>
+    </div>
+
+    <div *ngIf="indexSearchResult != undefined">
+      <ul class="list-group small">
+        <li class="list-group-item list-group-item-success">Found <code>{{indexSearchResult.totalHits}}</code> hit(s) in the index named <code>{{indexSearchResult.index}}</code></li>
+        <li class="list-group-item list-group-item-warning" *ngIf="indexSearchResult.totalHits == 0 && indexSearchResult.currentPage > 0">
+          You are on an empty page <a (click)="searchText(indexSearchResult.index, indexSearchResult.query, indexSearchResult.totalPages - 1, indexSearchResult.pageSize)" >go to the latest page with results</a>
+        </li>
+        <li *ngIf="indexIsEmpty" class="list-group-item list-group-item-primary">
+          Index is empty; try to index something filling the blue input box
+        </li>
+        <li *ngIf="!indexIsEmpty && indexSearchResult.totalHits == 0" class="list-group-item list-group-item-primary">
+          Try to index something filling the blue input box
+        </li>
+        <li class="list-group-item list-group-item-danger" *ngIf="errorMessage" >
+          Error: <code>{{errorMessage}}</code>
+        </li>
+      </ul>
+
+      <div class="container text-start shadow-sm p-3 mb-5 bg-body rounded">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let hit of indexSearchResult.hits; index as i">
+            <span class="p-2 align-top text-muted">{{indexSearchResult.currentPage*indexSearchResult.pageSize + i}}.</span>
+            <textarea style="resize: both" class="input-group-lg hresize vresize" rows="1" disabled readonly>{{hit.content}}</textarea>
+            <button type="button" class="align-top btn-close" aria-label="DeIndex"
+                    data-bs-toggle="popover" data-bs-content="Press X to remove document from index"
+                    data-bs-trigger="hover focus" data-bs-container="body"  data-bs-placement="right"
+                    (click)="deindexText(indexSearchResult.index, hit.id)"></button>
+
+          </li>
+        </ul>
+
+        <nav *ngIf="indexSearchResult.totalPages > 1" aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" (click)="searchText(indexSearchResult.index, indexSearchResult.query, indexSearchResult.currentPage - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li *ngFor="let idx of range(0, indexSearchResult.totalPages)" class="page-item" [ngClass]="{'active': idx == indexSearchResult.currentPage}"><a class="page-link" (click)="searchText(indexSearchResult.index, indexSearchResult.query, idx)">{{idx + 1}}</a></li>
+            <li class="page-item">
+              <a class="page-link" (click)="searchText(indexSearchResult.index, indexSearchResult.query, indexSearchResult.currentPage + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-start shadow-lg p-3 mb-5 bg-body rounded">
+    <h4>Index Management</h4>
+    <br>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card shadow p-3 mb-5 bg-body rounded">
+          <div class="card-body">
+            <h5 class="card-title">Purge an index</h5>
+            <p class="card-text">Remove all documents stored in the index. The index will be emptied.</p>
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <select class="form-select align-content-start" [(ngModel)]="selectedIndex" >
+                  <option *ngIf="availableIndexes == null" selected value="defaultIndex">Loading...</option>
+                  <option *ngIf="availableIndexes?.length == 0" selected value="defaultIndex">defaultIndex</option>
+                  <option *ngFor="let index of availableIndexes" [ngValue]="index">{{index}}</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <button type="button" class="form-control btn btn-primary">Purge</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card shadow p-3 mb-5 bg-body rounded">
+          <div class="card-body">
+            <h5 class="card-title">Create a new index</h5>
+            <p class="card-text">This application support multiple separated indexes. Create as many indexes as you want.</p>
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <input type="text" (keyup.enter)="createIndex(indexToCreate)" [(ngModel)]="indexToCreate" class="form-control" maxlength="30" minlength="8" size="26" placeholder="index name">
+              </div>
+              <div class="col-auto">
+                <button type="button" (click)="createIndex(indexToCreate)" [disabled]="!indexToCreate" class="form-control btn btn-primary">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="card shadow p-3 mb-5 bg-body rounded"><!--  shadow-sm p-3 mb-5 bg-body rounded -->
+          <div class="card-body">
+            <h5 class="card-title">Delete an index</h5>
+            <p class="card-text">Completely delete the index. The default index will be recreated.</p>
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <select class="form-select align-content-start" [(ngModel)]="selectedIndex" >
+                  <option *ngIf="availableIndexes == null" selected value="defaultIndex">Loading...</option>
+                  <option *ngIf="availableIndexes?.length == 0" selected value="defaultIndex">defaultIndex</option>
+                  <option *ngFor="let index of availableIndexes" [ngValue]="index">{{index}}</option>
+                </select>
+              </div>
+              <div class="col-auto">
+                <button type="button" (click)="deleteIndex(selectedIndex)" class="form-control btn btn-primary">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+
+</div>
+<router-outlet></router-outlet>

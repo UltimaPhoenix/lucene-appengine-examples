@@ -1,23 +1,14 @@
-*.class
-
-# All dotfiles #
-.*
-!.gitignore
-!.mvn
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# Maven #
-/target/
-
-# Eclipse #
-# covered by [all dotfiles] #
-
-# IntelliJ #
-/*.iml
-/*.ipr
-/*.iws
-/target
+Thumbs.db
+.DS_Store
+.gradle
+build/
+target/
+out/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+.factorypath
