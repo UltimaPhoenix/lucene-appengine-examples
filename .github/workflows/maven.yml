@@ -42,7 +42,7 @@ jobs:
       run: npm install
       working-directory: src/webapp/index-manager
     - name: Client build
-      run: ng build --configuration production --output-path target/public
+      run: ng build --configuration production --output-path $GITHUB_WORKSPACE/target/public
       working-directory: src/webapp/index-manager
 # server build
     - name: Server build
