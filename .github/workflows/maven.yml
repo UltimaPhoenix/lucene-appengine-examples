@@ -50,6 +50,6 @@ jobs:
     - name: Check result
       run: zipinfo -1 target/gae-test-index-5.0.0.jar
     - name: Publish package
-      run: mvn -sB deploy:deploy-file -Dfile=target/gae-test-index-5.0.0.jar -DpomFile=pom.xml -DrepositoryId=github -Durl=https://maven.pkg.github.com/UltimaPhoenix/lucene-appengine-examples
+      run: mvn -s deploy:deploy-file -Dfile=target/gae-test-index-5.0.0.jar -DpomFile=pom.xml -DrepositoryId=github -Durl=https://maven.pkg.github.com/UltimaPhoenix/lucene-appengine-examples
       env:
         GITHUB_TOKEN: ${{ github.token }}
