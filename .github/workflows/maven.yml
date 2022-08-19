@@ -33,23 +33,23 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: ./src/webapp/index-manager
+        cache-dependency-path: src/webapp/index-manager
     - name: Install Angular CLI
       run: npm install --location=global @angular/cli
-      working-directory: ./src/webapp/index-manager
+      working-directory: src/webapp/index-manager
 # client build
     - name: Client install dep
       run: npm install
-      working-directory: ./src/webapp/index-manager
+      working-directory: src/webapp/index-manager
     - name: Client build
-      run: ng build --configuration production
-      working-directory: ./src/webapp/index-manager
+      run: ng build --configuration production --output target/public
+      working-directory: src/webapp/index-manager
 # server build
     - name: Server build
       run: mvn -B package --file pom.xml
 # together
     - name: Add to zip
-      run: zip -ur target/gae-test-index-5.0.0.jar ./src/webapp/index-manager/dist/index-manager
-      working-directory:
+      run: zip -ur gae-test-index-5.0.0.jar public
+      working-directory: target
     - name: Check result
       run: zipinfo -1 target/gae-test-index-5.0.0.jar
