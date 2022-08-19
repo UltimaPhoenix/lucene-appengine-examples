@@ -145,11 +145,11 @@
       <scope>provided</scope>
     </dependency>
     <!-- LAE -->
-    <dependency>
-      <groupId>com.googlecode.luceneappengine</groupId>
-      <artifactId>luceneappengine</artifactId>
-      <version>${luceneappengine.version}</version>
-    </dependency>
+<!--    <dependency>-->
+<!--      <groupId>com.googlecode.luceneappengine</groupId>-->
+<!--      <artifactId>luceneappengine</artifactId>-->
+<!--      <version>${luceneappengine.version}</version>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
