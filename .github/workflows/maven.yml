@@ -48,5 +48,13 @@ jobs:
     - name: Build production
       run: ng build --configuration production
       working-directory: ./src/webapp/index-manager
-
-  
+  prepare-final-artifact:
+    needs: [build-server, build-client]
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls -lRh
+  deploy-appengine:
+    needs: prepare-final-artifact
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls -l
