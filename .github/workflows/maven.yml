@@ -60,7 +60,7 @@ jobs:
       with:
         credentials_json: '${{ secrets.GCP_SA_KEY }}'
     - name: AppEngine Standard Environment Deploy
-      id: 'd'eploy
+      id: 'deploy'
       uses: 'google-github-actions/deploy-appengine@v0'
       with:
         deliverables: target/gae-test-index~.jar
