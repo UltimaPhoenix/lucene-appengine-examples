@@ -13,10 +13,6 @@ on:
 jobs:
   build-server:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v3
       # setup server build preconditions
@@ -28,10 +24,10 @@ jobs:
         cache: maven
 
       # setup client build preconditions
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 16
         cache: 'npm'
         cache-dependency-path: src/webapp/index-manager
     - name: Install Angular CLI
@@ -53,3 +49,8 @@ jobs:
       working-directory: target
     - name: Check result
       run: zipinfo -1 target/gae-test-index-5.0.0.jar
+    - name: Publish package
+      run: mvn -sB deploy:deploy-file -Dfile=gae-test-index-5.0.0.jar -DpomFile=../pom.xml -DrepositoryId=github -Durl=https://maven.pkg.github.com/UltimaPhoenix/lucene-appengine-examples
+      working-directory: target
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
