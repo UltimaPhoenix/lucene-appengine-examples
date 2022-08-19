@@ -40,8 +40,10 @@ jobs:
         cache: 'npm'
         cache-dependency-path: ./src/webapp/index-manager
     - name: Install Angular CLI
-      run: npm install -g @angular/cli
-    - name: Build 
+      run: npm install --location=global @angular/cli
+    - name: Install Dependencies
+      run: npm install
+    - name: Build production
       run: ng build --configuration production
       working-directory: ./src/webapp/index-manager
 
