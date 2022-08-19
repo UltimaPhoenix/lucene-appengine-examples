@@ -45,11 +45,9 @@ jobs:
       run: mvn -B package --file pom.xml
 # together
     - name: Add to zip
-      run: zip -ur gae-test-index-5.0.0.jar public
+      run: zip -ur gae-test-index~.jar public
       working-directory: target
-    - name: Check result
-      run: zipinfo -1 target/gae-test-index-5.0.0.jar
     - name: Publish package
-      run: mvn -B deploy:deploy-file -Dfile=target/gae-test-index-5.0.0.jar -DpomFile=pom.xml -DrepositoryId=github -Durl=https://maven.pkg.github.com/UltimaPhoenix/lucene-appengine-examples
+      run: mvn -B deploy:deploy-file -Dfile=target/gae-test-index~.jar -DpomFile=pom.xml -DrepositoryId=github -Durl=https://maven.pkg.github.com/UltimaPhoenix/lucene-appengine-examples
       env:
         GITHUB_TOKEN: ${{ github.token }}
