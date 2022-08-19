@@ -252,31 +252,31 @@
         </executions>
       </plugin>
       <!-- START Build frontend and copy resources -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>run-angular-production-build</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <addOutputToClasspath>false</addOutputToClasspath>
-              <executable>./build.sh</executable>
-              <workingDirectory>src/webapp/index-manager</workingDirectory>
-              <arguments>
-                <argument>build</argument>
-                <argument>--configuration</argument>
-                <argument>production</argument>
-                <argument>--output-path</argument>
-                <argument>${project.basedir}/target/classes/public</argument>
-              </arguments>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.codehaus.mojo</groupId>-->
+<!--        <artifactId>exec-maven-plugin</artifactId>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>run-angular-production-build</id>-->
+<!--            <phase>generate-resources</phase>-->
+<!--            <goals>-->
+<!--              <goal>exec</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <addOutputToClasspath>false</addOutputToClasspath>-->
+<!--              <executable>./build.sh</executable>-->
+<!--              <workingDirectory>src/webapp/index-manager</workingDirectory>-->
+<!--              <arguments>-->
+<!--                <argument>build</argument>-->
+<!--                <argument>&#45;&#45;configuration</argument>-->
+<!--                <argument>production</argument>-->
+<!--                <argument>&#45;&#45;output-path</argument>-->
+<!--                <argument>${project.basedir}/target/classes/public</argument>-->
+<!--              </arguments>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
       <!-- END Build frontend and copy resources -->
     </plugins>
   </build>

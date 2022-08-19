@@ -5,7 +5,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "gae17-micronaut-lae5" ]
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
